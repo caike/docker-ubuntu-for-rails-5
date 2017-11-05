@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.4.1
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: bin/rails server --port 3000 --binding 0.0.0.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app # or whatever the WORKDIR is
+    depends_on:
+      - db
